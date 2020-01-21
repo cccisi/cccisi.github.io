@@ -57,7 +57,7 @@ yandex_site_verification :
 
 # Social Sharing
 twitter:
-  username               : &Zackary Chen
+  username               : Zackary Chen
 facebook:
   username               : Zackary Chen
   app_id                 :
@@ -88,7 +88,7 @@ author:
   pubmed           :
   googlescholar    : "https://scholar.google.com/citations?user=VzU4b8sAAAAJ&hl=en"
   email            : "cccisi@live.com"
-  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
+  researchgate     :  "https://www.researchgate.net/profile/Zhaohui_Chen10"
   uri              :
   bitbucket        :
   codepen          :
@@ -102,7 +102,7 @@ author:
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : "https://www.linkedin.com/in/%E6%9C%9D%E6%99%96-%E9%99%88-9a25ab121/"
+  linkedin         : "%E6%9C%9D%E6%99%96-%E9%99%88-9a25ab121/"
   orcid            : "https://orcid.org/0000-0001-6468-7575"
   pinterest        :
   soundcloud       :
