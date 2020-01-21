@@ -1,7 +1,10 @@
 ---
-title: "Portfolio item number 1"
-excerpt: "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
+title: "Heterogeneous acceleration card for post-quantum cryptography"
+excerpt: "The goal is to develop a stand-alone CPU-FPGA acceleration system for post-quantum cryptography like NewHope. Polynomial multiplication, i.e. NTT, is loaded off with the help of an FPGA programmable acceleration card. <br/><img src='/images/foo-bar-identity.jpg'>"
 collection: portfolio
 ---
 
-This is an item in your portfolio. It can be have images or nice text. If you name the file .md, it will be parsed as markdown. If you name the file .html, it will be parsed as HTML. 
+* Develop the following features to achieve high performance.
+- Develop a processing element with Montgomery reduction for NTT, further pipeline the dataflow for high frequency.
+- Parallel 512 processing elements and develop a high bandwidth storage structure.
+- High-speed data transmission interface through a PCIe Gen3 interface.

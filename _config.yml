@@ -9,8 +9,8 @@
 locale                   : "en-US"
 title                    : "Zhaohui Chen / UCAS"
 title_separator          : "-"
-name                     : &name "Your Name"
-description              : &description "personal description"
+name                     : &name "Zhaohui Chen"
+description              : &description "Ph.D candidate"
 url                      : https://cccisi.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "cccisi/cccisi.github.io"
@@ -80,9 +80,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "cccisi"
-  avatar           : "profile.png"
-  bio              : "Your biography for the left-hand sidebar"
+  name             : "Zhaohui Chen"
+  avatar           : "profile.jpg"
+  bio              : "Ph.D candidate in University of Chinese Academy of Sciences, Chin"
   location         : "Beijing"
   employer         :
   pubmed           :
@@ -94,7 +94,7 @@ author:
   codepen          :
   dribbble         :
   flickr           :
-  facebook         :
+  facebook         : "Zachary Chen"
   foursquare       :
   github           : "cccisi"
   google_plus      :
@@ -102,14 +102,14 @@ author:
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         :
+  linkedin         : "https://www.linkedin.com/in/%E6%9C%9D%E6%99%96-%E9%99%88-9a25ab121/"
   orcid            : "https://orcid.org/0000-0001-6468-7575"
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : "replacethistwitterhandle"
+  twitter          : "Zachary Chen"
   vine             :
   weibo            :
   xing             :

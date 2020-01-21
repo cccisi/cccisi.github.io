@@ -1,7 +1,10 @@
 ---
-title: "Portfolio item number 2"
-excerpt: "Short description of portfolio item number 2 <br/><img src='/images/500x300.png'>"
+title: "Area-efficient FPGA post-quantum cryptography module"
+excerpt: "Target to achieve an area-efficient polynomial vector multiplication module for a lattice-based algorithm called Kyber. <br/><img src='/images/foo-bar-identity.jpg'>"
 collection: portfolio
 ---
 
-This is an item in your portfolio. It can be have images or nice text. If you name the file .md, it will be parsed as markdown. If you name the file .html, it will be parsed as HTML. 
+* Developed an architecture including the following innovations:
+- Optimized the NTT algorithm with GS butterfly. The GS butterfly is used both in forward and inverse NTT to utilize the internal DSP adders. The optimization reduces about 30% clock cycles compared with the textbook implementations.
+- Developed a dual-column sequential storage scheme that keeps the pipelined datapath free of bubbles.
+- Integrating NTT, multiply-accumulate (MACC) and multiply-add (MADD) operations using only 442 LUTs and 237 FFs. The module achieves at least 3x more efficient than the state of work.
