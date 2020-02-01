@@ -5,7 +5,7 @@ permalink: /publication/2020-01-15-cinference
 excerpt: 'This paper is about the number 2. The number 3 is left for future work.'
 date: 2020-01-15
 venue: 'ASP-DAC 2020'
-paperurl: 'http://cccisi.github.io/files/paper2.pdf'
+paperurl: 'http://cccisi.github.io/files/Kyber.pdf'
 citation: 'Zhaohui Chen, Yuan Ma, Tianyu Chen, Jingqiang Lin, Jiwu Jing." Towards Efficient Kyber on FPGAs: A Processor for Vector of Polynomials," to appear in the 25th Asia and South Pacific Design Automation Conference (ASP DAC) 2020.'
 ---
 
