@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Continuous Model Identity Attestation for LLM Serving</title>
+<style>
+@page{size:A4;margin:13mm 15mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#172334;font-size:9.25pt;line-height:1.36;margin:0}h1{font-size:20pt;line-height:1.14;margin:0 0 5mm;color:#10233b}h2{font-size:11pt;color:#123b60;margin:4.2mm 0 1.4mm;border-bottom:1px solid #b8c8d7;padding-bottom:1mm}h3{font-size:9.4pt;margin:2.8mm 0 1mm;color:#163c59}p{margin:0 0 2mm}ul{margin:1mm 0 2mm;padding-left:5mm}li{margin:0 0 1.2mm}.kicker{font-size:8pt;font-weight:bold;color:#236d88;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:2mm}.meta{color:#54667a;font-size:8.5pt;margin-bottom:5mm}.abstract{background:#eef4f7;border-left:3px solid #237895;padding:3mm 3.5mm;margin-bottom:3mm}.page{height:271mm;page-break-after:always;position:relative}.page:last-child{page-break-after:auto}.footer{position:absolute;bottom:0;left:0;right:0;border-top:1px solid #cdd8df;padding-top:2mm;font-size:7.5pt;color:#657589;display:flex;justify-content:space-between}.grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm}.box{border:1px solid #cbd9e2;border-radius:3px;padding:2.6mm;background:#fbfdfe}.small{font-size:8.2pt}.refs{font-size:7.6pt;line-height:1.28}.refs li{margin-bottom:1.3mm}.refs a{color:#155d87;text-decoration:none;overflow-wrap:anywhere}.highlight{background:#eaf2ed;border-left:3px solid #3d8b67;padding:2.5mm 3mm;margin-top:2.5mm}
+</style></head><body>
+<section class="page">
+<div class="kicker">Open Research Proposal · 2026</div>
+<h1>Continuous Model Identity Attestation<br>for Distributed LLM Serving</h1>
+<div class="meta">Zhaohui Chen · Hardware Security / Cryptographic Engineering · Alibaba Group</div>
+<div class="abstract"><strong>Research question.</strong> Can an independent verifier obtain fresh, auditable evidence that a distributed inference service keeps the <em>declared</em> model and adapters resident while serving requests, without materially degrading throughput or tail latency? We propose an attested, sampling-based measurement plane that runs alongside inference. The claim is <em>probabilistic runtime model integrity</em>, not a proof that every output was computed correctly.</div>
+
+<h2>Motivation and gap</h2>
+<p>Platform attestation establishes a trusted starting environment, but a serving model may be sharded, swapped, quantized, or extended with adapters after launch [1]. Static artifact signatures establish provenance at rest; they do not by themselves show which bytes remain in GPU memory during a request. A useful deployment claim must bind an approved artifact manifest, the serving runtime, the actual loaded shards, a fresh challenge, and a defined measurement window.</p>
+
+<h2>Proposed system</h2>
+<div class="grid">
+<div class="box"><strong>1 · Canonical model commitment.</strong> The model publisher signs a manifest over exact deployed tensor bytes, dtype, quantization parameters, tensor-to-rank placement, tokenizer, and runtime configuration. Each tensor is split into fixed-size pages and committed with a domain-separated Merkle tree. Each tensor-parallel / pipeline-parallel / expert-parallel rank builds its local subtree; a small authenticated reduction combines rank roots into a global model root. Host-resident experts have their own tier and transfer epoch.</div>
+<div class="box"><strong>2 · Inference-interleaved audits.</strong> An attested controller derives unpredictable page challenges from a verifier nonce <em>after</em> the serving epoch is fixed. GPU kernels hash selected resident pages during idle or low-pressure windows and return Merkle openings. A signed receipt binds the model root, challenged rank/page IDs, coverage, runtime measurement, nonce, and request/epoch identifier. Sampling frequency adapts to measured latency headroom; no zero-overhead claim is assumed.</div>
+</div>
+<div class="grid" style="margin-top:3mm">
+<div class="box"><strong>3 · Mutable inference state.</strong> On a cache hit, record the selected prefix-cache block keys and a digest of sampled <em>content</em>, with tenant salt and a request-scoped commitment rather than raw prompts. This extends vLLM's existing token/parent-hash indexing [2], which identifies cache entries but does not authenticate their stored KV bytes. For dynamically loaded LoRA adapters, verify a publisher signature and bind adapter digest, base-model compatibility, and load epoch to the same receipt [3].</div>
+<div class="box"><strong>4 · Trust boundary.</strong> The controller and signing key run inside an attested confidential workload; CPU/GPU evidence is checked before signing [1]. A production guarantee requires the measured runtime to prevent an untrusted host or driver from bypassing audit kernels or swapping pages between measurement and use. Where this assumption is unavailable, receipts are explicitly labeled <em>best-effort monitoring</em>. The design must bound time-of-check/time-of-use gaps rather than hide them.</div>
+</div>
+
+<h2>Core hypothesis</h2>
+<p>Hierarchical roots reduce cross-rank communication to small commitments; challenge-based page checks avoid a full model rehash per request; workload-aware scheduling may hide part of the audit cost. These are testable hypotheses, not established throughput figures. The main novelty to evaluate is the joint, fresh binding of distributed <em>resident</em> weights, adapter epochs, and selected shared cache state to an independently verifiable receipt.</p>
+<div class="footer"><span>Concept origin: Zhaohui Chen · contact via the Open Proposal page</span><span>1 / 2</span></div>
+</section>
+
+<section class="page">
+<div class="kicker">Research Plan · Evidence · Collaboration</div>
+<h2>Method and evaluation</h2>
+<p><strong>Prototype.</strong> Implement a vLLM integration on a multi-GPU server, first for tensor-parallel dense models, then MoE expert placement and dynamic adapters. Compare a baseline with no audits, full periodic hashing, and independent rank-local sampling. Evaluate BLAKE3 or another implementation only after benchmarking it on target GPUs; retain SHA-256 for signed manifest interoperability if appropriate. Compare ordinary streams, CUDA Graph integration, and Green Context partitioning only where supported [4].</p>
+<p><strong>Measurements.</strong> Report end-to-end tokens/s, time-to-first-token, p50/p99 inter-token latency, GPU and network utilization, receipt size, verifier cost, and energy. Vary model size, TP/PP/EP degree, batch mix, prompt length, cache hit rate, audit rate, and offload frequency. Inject persistent and transient weight-page corruption, unauthorized adapter replacement, stale manifests, replayed receipts, and poisoned shared cache blocks. Publish detection probability and time-to-detection against the actual challenge schedule; disclose missed cases.</p>
+<p><strong>Security analysis.</strong> A persistent change to one uniformly sampled page is detected with probability equal to that page's sampling probability per independent audit; transient changes can evade checks between audits. Hashing stored weights cannot detect arbitrary arithmetic faults or prove response correctness. It may detect sampled memory corruption, including some silent data corruption, but that benefit must be measured separately. A nonce and signed epoch bind freshness; rollback prevention needs a trusted monotonic policy or external verifier state. Private prompts, weights, and KV contents remain outside public receipts.</p>
+
+<h2>Prior work and distinction</h2>
+<p>NVIDIA's confidential-computing stack attests platform state and gates model-key release [1]; this project asks what the <em>resident model state</em> is during ongoing service. vLLM already uses prefix-block hashes and warns that dynamic LoRA loading is security sensitive [2,3]. SAGE studies GPU execution attestation [5], while sampled layerwise proofs target inference-trace correctness at substantially different cost and guarantee points [6]. The proposed receipts are complementary: they certify a measured deployment state with explicit sampling coverage, not the correctness of each generated token. Sigstore-style transparency can optionally record signed model manifests without exposing model bytes [7].</p>
+
+<h2>Milestones and deliverables</h2>
+<ul><li><strong>M1:</strong> Threat model, canonical signed manifest, rank-local Merkle roots, and a verifier for dense TP models.</li><li><strong>M2:</strong> Attested challenge/receipt path and scheduler benchmarks; quantify overhead versus detection coverage.</li><li><strong>M3:</strong> MoE offload epochs, adapter provenance, and sampled prefix-cache integrity; adversarial evaluation.</li></ul>
+
+<div class="highlight small"><strong>Open source, origin, and collaboration.</strong> These research directions and this proposal originate with <strong>Zhaohui Chen (2026)</strong>. The prototype is intended for release under <strong>Apache License 2.0</strong>, with attribution preserved in its copyright and NOTICE files; this proposal text is shared under <strong>CC BY 4.0</strong> with attribution to Zhaohui Chen. This is an invitation to work <strong>in collaboration with Zhaohui Chen</strong> on the research and resulting publications. Please contact him through the Open Proposal page before starting a joint project. Collaboration is a project participation requirement, not an additional restriction on use of released open-source code.</div>
+
+<h2>Selected references</h2>
+<ol class="refs">
+<li>NVIDIA, <a href="https://docs.nvidia.com/enterprise-reference-architectures/deploying-proprietary-models-confidential-compute-self-hosted-vms/latest/attestation-and-key-release-flow.html">Attestation and key-release flow</a>.</li>
+<li>vLLM, <a href="https://docs.vllm.ai/en/latest/design/prefix_caching/">Automatic prefix caching design</a>.</li>
+<li>vLLM, <a href="https://docs.vllm.ai/en/latest/features/lora/">LoRA adapters and dynamic loading</a>.</li>
+<li>NVIDIA, <a href="https://docs.nvidia.com/cuda/cuda-programming-guide/04-special-topics/green-contexts.html">CUDA Green Contexts</a>.</li>
+<li>Ivanov et al., <a href="https://spcl.inf.ethz.ch/Publications/.pdf/atc23-ivanov.pdf">SAGE: Software-based Attestation for GPU Execution</a>, USENIX ATC 2023.</li>
+<li>Lim and Yong, <a href="https://arxiv.org/abs/2609.27367">Seal, Then Sample: Sampled Layerwise Proofs for Verifiable LLM Inference</a>, 2026.</li>
+<li>Sigstore, <a href="https://github.com/sigstore/architecture-docs/blob/main/rekor-spec.md">Rekor transparency log specification</a>.</li>
+</ol>
+<div class="footer"><span>Research proposal · Zhaohui Chen · 2026</span><span>2 / 2</span></div>
+</section>
+</body></html>
