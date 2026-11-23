@@ -1,2 +1,12 @@
+# Local Jekyll and npm build output
 _site/
+.sass-cache/
+.bundle/
+Gemfile.lock
+node_modules/
+package-lock.json
+vendor/
+local/
+.vscode/
+.DS_Store
 

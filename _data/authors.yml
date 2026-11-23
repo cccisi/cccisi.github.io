@@ -3,8 +3,8 @@
 Name Name:
   name        : "Zhaohui Chen"
   uri         : "https://cccisi.github.io/"
-  email       : "cccisi@live.com"
-  bio         : "This is my academic website."
+  email       :
+  bio         : "Hardware security, homomorphic encryption, and privacy-preserving computation."
   avatar      : "bio-photo.jpg"
-  twitter     : "Zachary Chen"
+  twitter     :
   google_plus : "cccisi95@gmail.com"

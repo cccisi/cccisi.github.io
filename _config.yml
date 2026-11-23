@@ -7,10 +7,11 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Zhaohui Chen / UCAS"
+site_theme               : "default" # Academic Pages v0.9
+title                    : "Zhaohui Chen"
 title_separator          : "-"
 name                     : &name "Zhaohui Chen"
-description              : &description "Ph.D candidate"
+description              : &description "Research in hardware security, cryptographic engineering, and privacy-preserving hardware"
 url                      : https://cccisi.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "cccisi/cccisi.github.io"
@@ -57,9 +58,9 @@ yandex_site_verification :
 
 # Social Sharing
 twitter:
-  username               : Zackary Chen
+  username               :
 facebook:
-  username               : Zackary Chen
+  username               :
   app_id                 :
   publisher              :
 og_image                 :  # Open Graph/Twitter default site image
@@ -82,34 +83,34 @@ analytics:
 author:
   name             : "Zhaohui Chen"
   avatar           : "profile.jpg"
-  bio              : "Ph.D candidate in University of Chinese Academy of Sciences, China"
+  bio              : "Hardware security, homomorphic encryption, and privacy-preserving computation"
   location         : "Beijing"
-  employer         :
+  employer         : "Alibaba Group"
   pubmed           :
   googlescholar    : "https://scholar.google.com/citations?user=VzU4b8sAAAAJ&hl=en"
-  email            : "cccisi@live.com"
+  email            :
   researchgate     :  "https://www.researchgate.net/profile/Zhaohui_Chen10"
   uri              :
   bitbucket        :
   codepen          :
   dribbble         :
   flickr           :
-  facebook         : "Zachary Chen"
+  facebook         :
   foursquare       :
-  github           : "cccisi"
+  github           :
   google_plus      :
   keybase          :
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : "%E6%9C%9D%E6%99%96-%E9%99%88-9a25ab121/"
+  linkedin         :
   orcid            : "https://orcid.org/0000-0001-6468-7575"
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : "Zachary Chen"
+  twitter          :
   vine             :
   weibo            :
   xing             :
@@ -129,8 +130,10 @@ exclude:
   - .bundle
   - .jekyll-assets-cache
   - .sass-cache
+  - .github
   - CHANGELOG
   - Capfile
+  - Dockerfile
   - Gemfile
   - Gruntfile.js
   - LICENSE
@@ -143,7 +146,7 @@ exclude:
   - gulpfile.js
   - log
   - node_modules
-  - package.json
+  - package.json*
   - tmp
   - vendor
 keep_files:
@@ -265,12 +268,14 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-redirect-from
+  - jemoji
 # mimic GitHub Pages with --safe
 whitelist:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
+  - jekyll-redirect-from
   - jemoji
 
 

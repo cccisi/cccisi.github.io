@@ -7,52 +7,33 @@ redirect_from:
   - /resume
 ---
 
-{% include base_path %}
+# Zhaohui Chen
 
-Education
-======
-* B.S. in Information Engineering, China University of Mining and Technology, 2013-2017
-* Ph.D candidate in Information security, University of Chinese Academy of Sciences, 2017-2022 (expected)
+Research areas: hardware security, cryptographic engineering, and privacy-preserving hardware.
 
-Work experience
-======
-* Summer 2017: R&D
-  * Ninedim Technology
-  * Duties included: Java developing
-  * Supervisor: Kai Chao
+## Professional experience
 
-* Jan-Jun 2018: Research Assistant
-  * Beijing Research Institute of China Telecom
-  * Duties included: Single sign on system for Android.
-  * Supervisor: Wei Zhang
+- **Alibaba Group**, September 2022 – present.
 
-Skills
-======
-* Skill 1 English
-* Skill 2 Hardware development
-  * Sub-skill 2.1 Xilinx Vivado/ISE
-  * Sub-skill 2.2 Synopsys DC
-  * Sub-skill 2.3 ModelSim
-* Skill 3 Software development
+## Education
 
-Publications
-======
-  <ul>{% for post in site.publications %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
+- **Postdoctoral Researcher in Computer Science and Technology**, Peking University, September 2022 – August 2024.
+- **Ph.D. in Information Security**, University of Chinese Academy of Sciences, September 2017 – June 2022.
+- **B.Eng. in Information Engineering**, China University of Mining and Technology, September 2013 – June 2017.
 
-Talks
-======
-  <ul>{% for post in site.talks %}
-    {% include archive-single-talk-cv.html %}
-  {% endfor %}</ul>
+## Research interests
 
-<!-- Teaching
-======
-  <ul>{% for post in site.teaching %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul> -->
+- Hardware security
+- Homomorphic encryption
+- Privacy-preserving computation
 
-<!-- Service and leadership
-======
-* Currently signed in to 43 different slack teams -->
+## Publications
+
+See the [publications page](/publications/) and [Google Scholar profile](https://scholar.google.com/citations?user=VzU4b8sAAAAJ&hl=en).
+
+## Contact
+
+Building A, Alibaba Chaoyang Science and Technology Park, Chaoyang District, Beijing 100102, China  
+Email:
+
+{% include email-contact.html %}
